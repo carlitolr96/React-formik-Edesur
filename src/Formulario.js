@@ -1,58 +1,51 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { Formik } from 'formik';
 
 const Formulario = () => {
-	const [inputNombre, cambiarInputNombre] = useState('');
-	const [inputCorreo, cambiarInputCorreo] = useState('');
-
-	// Funcion que se encargara de validar los datos y enviar el formulario
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		// Comprobamos validacion del formulario ...
-		// Si todo es correcto enviamos el formulario
-
-		console.log('Formulario Enviado!');
-	}
-
-	// Funcion que se encarga de cambiar el estado del inputNombre
-	const handleInputNombre = (e) => {
-		cambiarInputNombre(e.target.value);
-	}
-	
-	// Funcion que se encarga de cambiar el estado del inputCorreo
-	const handleInputCorreo = (e) => {
-		cambiarInputCorreo(e.target.value);
-	}
-
 	return (
 		<>
-			<form action="" onSubmit={handleSubmit} className="formulario">
-				<div>
-					<label htmlFor="nombre">Nombre</label>
-					<input
-						type="text"
-						name="nombre"
-						placeholder="Nombre"
-						id="nombre"
-						value={inputNombre}
-						onChange={handleInputNombre}
-					/>
-				</div>
-
-				<div>
-					<label htmlFor="correo">Correo</label>
-					<input
-						type="text"
-						name="correo"
-						placeholder="Correo"
-						id="correo"
-						value={inputCorreo}
-						onChange={handleInputCorreo}
-					/>
-				</div>
-
-				<button type="submit">Enviar</button>
-			</form>
+			<Formik
+				initialValues={{
+					nombre: '',
+					correo: ''
+				}}
+				onSubmit={() => {
+					console.log('Formulario enviado');
+				}}
+			>
+				{( {values, handleSubmit, handleChange, handleBlur} ) => (
+					<form className="formulario" onSubmit={handleSubmit}>
+						<div>
+							<img src="https://edesur.com.do/media/ft2g4dvn/logo.png" alt="Edesur-logo" height="90px" />
+						</div>
+						<div>
+							<label htmlFor="nombre">Nombre</label>
+							<input 
+								type="text" 
+								id="nombre" 
+								name="nombre" 
+								placeholder="John Doe" 
+								value={values.nombre}
+								onChange={handleChange}
+							/>
+						</div>
+						<div>
+							<label htmlFor="correo">Correo</label>
+							<input 
+								type="email" 
+								id="correo" 
+								name="correo" 
+								placeholder="correo@correo.com" 
+								value={values.correo}
+								onChange={handleChange}
+								// onBlur={handleBlur}
+							/>
+						</div>
+						<button type="submit">Enviar</button>
+					</form>
+				)}
+				
+			</Formik>
 		</>
 	);
 }
